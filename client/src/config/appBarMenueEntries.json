@@ -1,0 +1,16 @@
+{
+  "main": {
+    "links": [
+      {
+        "icon": "mdi-logout-variant",
+        "text": "Logout",
+        "to": "/logout"
+      },
+      {
+        "icon": "mdi-account-box-outline",
+        "text": "Logout",
+        "href": "/logout"
+      }
+    ]
+  }
+}

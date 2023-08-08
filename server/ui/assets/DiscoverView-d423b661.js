@@ -1,0 +1,1 @@
+import{d as o,u as t,o as s,c as r}from"./index-ef96d992.js";const c=o("base",()=>({route:t()})),_={__name:"DiscoverView",setup(e){return console.log(c()),(a,n)=>(s(),r("div"))}};export{_ as default};

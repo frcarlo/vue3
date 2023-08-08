@@ -1,0 +1,145 @@
+{
+  "action_order": ["component_templates", "index_templates"],
+  "templates": {
+    "enrich_policies": [],
+    "ingest_pipelines": [
+      {
+        "name": "pdac-default",
+        "body": {
+          "description": "",
+          "processors": [
+            {
+              "pipeline": {
+                "description": "If 'index' is 'pdac-customer', use 'pdac-customer_pipeline'",
+                "if": "_index == 'pdac-customer'",
+                "name": "pdac-customer"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "pdac-customer",
+        "body": {
+          "description": "pdac-customer-pipeline",
+          "version": "2023.07.01_001",
+          "processors": []
+        }
+      }
+    ],
+    "index_templates": [
+      {
+        "name": "pdac-customer",
+
+        "api": {
+          "type": "indices",
+          "put": "putIndexTemplate",
+          "get": "putIndexTemplate",
+          "exists": "existsIndexTemplate"
+        },
+        "body": {
+          "index_patterns": ["pdac-customer"],
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            },
+            "mappings": {
+              "_source": {
+                "enabled": true
+              },
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                },
+                "name": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "aliases": {}
+          },
+          "priority": 500,
+          "composed_of": ["pdac-timestamp"],
+          "version": 1,
+          "_meta": {
+            "description": "pdac customer index template"
+          }
+        }
+      },
+      {
+        "name": "pdac-users",
+
+        "api": {
+          "type": "indices",
+          "put": "putIndexTemplate",
+          "get": "putIndexTemplate",
+          "exists": "existsIndexTemplate"
+        },
+        "body": {
+          "index_patterns": ["pdac-users"],
+          "template": {
+            "settings": {
+              "number_of_shards": 1
+            },
+            "mappings": {
+              "_source": {
+                "enabled": true
+              },
+              "properties": {
+                "id": {
+                  "type": "keyword"
+                },
+                "name": {
+                  "type": "keyword"
+                },
+                "email": {
+                  "type": "keyword"
+                }
+              }
+            },
+            "aliases": {}
+          },
+          "priority": 500,
+          "composed_of": ["pdac-timestamp"],
+          "version": 1,
+          "_meta": {
+            "description": "pdac customer index template"
+          }
+        }
+      }
+    ],
+
+    "component_templates": [
+      {
+        "name": "pdac-timestamp",
+        "api": {
+          "type": "cluster",
+          "put": "putComponentTemplate",
+          "get": "getComponentTemplate",
+          "exists": "existsComponentTemplate"
+        },
+        "body": {
+          "version": 1,
+          "_meta": {
+            "created_by": "pdac"
+          },
+          "template": {
+            "mappings": {
+              "properties": {
+                "created_at": {
+                  "type": "date"
+                },
+                "updated_at": {
+                  "type": "date"
+                },
+                "@timestamp": {
+                  "type": "date"
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
